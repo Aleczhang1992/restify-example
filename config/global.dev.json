@@ -9,6 +9,10 @@
         "Headers": []
     },
     "Logging": {},
+    "Mongodb":{
+        "Mongo":"mongodb://127.0.0.1:27017/china_user",
+        "Name":"china_app"
+    },
     "Security": {
         "SecretSigningKey": "are you ok?",
         "Users": [{
@@ -29,7 +33,8 @@
                         "/#1.0.0",
                         "/news#1.0.0",
                         "/news/:id#1.0.0",
-                        "/user/:id#1.0.0"
+                        "/user/:id#1.0.0",
+                        "/userList#1.0.0"
                     ],
                     "permissions": "*"
                 }]
@@ -40,7 +45,8 @@
                         "/#1.0.0",
                         "/news#1.0.0",
                         "/news/:id#1.0.0",
-                        "/user/:id#1.0.0"
+                        "/user/:id#1.0.0",
+                        "/userList#1.0.0"
                     ],
                     "permissions": "get"
                 }, {
@@ -55,7 +61,8 @@
                     "resources": [
                         "/#1.0.0",
                         "/news#1.0.0",
-                        "/news/:id#1.0.0"
+                        "/news/:id#1.0.0",
+                        "/userList#1.0.0"
                     ],
                     "permissions": "get"
                 }, {

@@ -21,6 +21,7 @@
     "acl": "^0.4.9",
     "jsonwebtoken": "^7.0.0",
     "moment": "^2.13.0",
+    "mongoose": "^4.5.3",
     "nconf": "^0.8.4",
     "restify": "^4.0.4",
     "stack-trace": "0.0.9",

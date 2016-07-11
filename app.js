@@ -51,6 +51,13 @@ const plugins = [
 
 server.use(plugins);
 
+
+/**
+ * MongoDB
+ */
+const mongo = require('./models/index');
+
+
 /**
  * CORS
  */
@@ -74,6 +81,7 @@ const registerRoute = function(route) {
         name: routeName,
         version: routeVersion
     } = route.meta;
+    //console.log(routeName);
     routeMethod = routeMethod.toLowerCase();
     if (routeMethod == 'delete') {
         routeMethod = 'del';
@@ -88,6 +96,7 @@ const registerRoute = function(route) {
                 path: aPath,
                 version: routeVersion
             };
+            //console.log(routeMeta);
             server[routeMethod](routeMeta, route.action);
         });
 
@@ -106,7 +115,6 @@ const setupRoute = function(routeName) {
 ]
 .forEach(setupRoute);
 
-
 /**
  * Listen
  */
@@ -119,7 +127,7 @@ const listen = function(done) {
         logger.info('%s listening at %s', server.name, server.url);
         // console.log('%s listening at %s', server.name, server.url);
     });
-}
+};
 
 if (!module.parent) {
     listen();

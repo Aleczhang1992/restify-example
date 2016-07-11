@@ -1,3 +1,7 @@
+#.gitignore   忽略不需要上传到git的文件
 
 #node dependency
 node_modules
+
+#WebStorm config file
+.idea
