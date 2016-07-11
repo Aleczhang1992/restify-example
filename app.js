@@ -55,7 +55,7 @@ server.use(plugins);
 /**
  * MongoDB
  */
-const mongo = require('./models/index');
+//const mongo = require('./models/index');
 
 
 /**
