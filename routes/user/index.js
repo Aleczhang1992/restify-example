@@ -2,7 +2,7 @@
 
 const restify = require('restify');
 const logger = require('../../utils/logging');
-const Users = require('../../models/index').Users;
+//const Users = require('../../models/index').Users;
 
 /**
  * Routes
