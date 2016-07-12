@@ -5,3 +5,6 @@ node_modules
 
 #WebStorm config file
 .idea
+
+#数据库配置文件,不要上传,否则服务器数据库跑不起来
+models/index.js

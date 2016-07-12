@@ -34,7 +34,8 @@
                         "/news#1.0.0",
                         "/news/:id#1.0.0",
                         "/user/:id#1.0.0",
-                        "/userList#1.0.0"
+                        "/userList#1.0.0",
+                        "/reco/getColumnsList#1.0.0"
                     ],
                     "permissions": "*"
                 }]
@@ -51,7 +52,8 @@
                     "permissions": "get"
                 }, {
                     "resources": [
-                        "/user/:id#1.0.0"
+                        "/user/:id#1.0.0",
+                        "/reco/getColumnsList#1.0.0"
                     ],
                     "permissions": "post"
                 }]
@@ -67,7 +69,8 @@
                     "permissions": "get"
                 }, {
                     "resources": [
-                        "/auth/signIn#1.0.0"
+                        "/auth/signIn#1.0.0",
+                        "/reco/getColumnsList#1.0.0"
                     ],
                     "permissions": "post"
                 }]
