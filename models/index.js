@@ -6,8 +6,8 @@ const nconf = require('../config');
 const mongoose = require('mongoose');
 const logger = require('../utils/logging');
 
-//mongoose.connect(nconf.get('Mongodb:Mongo'), function (err) {
-mongoose.connect('mongodb://'+process.env.MONGO_PORT_27017_TCP_ADDR+':27017/china_user', function (err) {
+mongoose.connect(nconf.get('Mongodb:Mongo'), function (err) {
+//mongoose.connect('mongodb://'+process.env.MONGO_PORT_27017_TCP_ADDR+':27017/china_user', function (err) {
     if (err) {
         logger.dbLogger.info('connect to %s error: ', nconf.get('Mongodb:Name'), err.message);
         process.exit(1);

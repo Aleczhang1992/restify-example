@@ -127,6 +127,9 @@ const listen = function(done) {
         logger.info('%s listening at %s', server.name, server.url);
         // console.log('%s listening at %s', server.name, server.url);
     });
+    server.get("/",function(req,res,next){
+        res.send({code:0,message:"welcome"});
+    });
 };
 
 if (!module.parent) {

@@ -25,8 +25,10 @@ module.exports = function() {
             token = credentials;
             try {
                 const dtoken = jwt.verify(token, nconf.get('Security:SecretSigningKey'));
+                //console.log(dtoken);
                 req.user = dtoken;
             } catch (err) {
+                //console.log('1');
                 return next(new restify.InvalidCredentialsError(err));
             }
         }else{
