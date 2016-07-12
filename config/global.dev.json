@@ -10,7 +10,7 @@
     },
     "Logging": {},
     "Mongodb":{
-        "Mongo":"mongodb://'+process.env.MONGO_PORT_27017_TCP_ADDR+':'+27107+'/china_user",
+        "MongoPort":"27107",
         "Name":"china_app"
     },
     "Security": {
