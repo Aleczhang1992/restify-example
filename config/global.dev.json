@@ -10,7 +10,7 @@
     },
     "Logging": {},
     "Mongodb":{
-        "MongoPort":"27107",
+        "MongoPort":"27017",
         "Name":"china_app"
     },
     "Security": {
