@@ -18,8 +18,7 @@ const CORSHelper = function(options) {
     const unknownMethodHandler = function(req, res) {
 
         const origin = req.headers.origin;
-        const originAllowed = false;
-
+        let originAllowed = false;
         // Skip if it's not a preflight request
         if (req.method.toLowerCase() !== 'options') {
             return res.send(new restify.MethodNotAllowedError());
