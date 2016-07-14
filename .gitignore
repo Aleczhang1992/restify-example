@@ -1,10 +1,17 @@
-#.gitignore   忽略不需要上传到git的文件
+# .gitignore   忽略不需要上传到git的文件
 
-#node dependency
+# node dependency
 node_modules
 
-#WebStorm config file
+# WebStorm config file
 .idea
 
-#数据库配置文件,不要上传,否则服务器数据库跑不起来
-models/index.js
+# npm错误日志
+npm-debug.log
+
+# 数据库配置文件,不要上传,否则服务器数据库跑不起来
+# models/index.js
+
+# 本地shell脚本,用来保持models/index.js文件可以和服务器端一致
+www.sh
+
