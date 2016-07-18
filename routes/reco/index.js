@@ -44,7 +44,7 @@ routes.push({
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
-            Recommendation.find(query).limit(limit).skip(skip).select(selector).exec((err,data)=>{
+            Recommendation.find(query).sort({ level: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
                 if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-2");
                 res.send({code:0,list:data,count:count,isMore:isMore});
                 next();

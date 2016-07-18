@@ -57,7 +57,11 @@
                 }, {
                     "resources": [
                         "/user/:id#1.0.0",
-                        "/reco/getColumnsList#1.0.0"
+                        "/reco/addColumn#1.0.0",
+                        "/reco/deleteColumns#1.0.0",
+                        "/reco/getColumnsList#1.0.0",
+                        "/reco/getDisabledColumnsList#1.0.0",
+                        "/reco/updateColumn#1.0.0"
                     ],
                     "permissions": "post"
                 }]
@@ -74,7 +78,11 @@
                 }, {
                     "resources": [
                         "/auth/signIn#1.0.0",
-                        "/reco/getColumnsList#1.0.0"
+                        "/reco/addColumn#1.0.0",
+                        "/reco/deleteColumns#1.0.0",
+                        "/reco/getColumnsList#1.0.0",
+                        "/reco/getDisabledColumnsList#1.0.0",
+                        "/reco/updateColumn#1.0.0"
                     ],
                     "permissions": "post"
                 }]
