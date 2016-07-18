@@ -35,10 +35,11 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { limit=10,skip=0,language='zh',name='',appID='',columnId=''} = req.params;
+        const { limit=10,skip=0,language='zh',name='',appID='chinaApp',columnId=''} = req.params;
         //console.log(limit,skip,language,name,appID,columnId);
         let isMore = false,query = {
-            Attributes:language
+            Attributes:language,
+            appId:appID
         },selector = "title menuId type level count";
         if(columnId) query.menuId = columnId;
         Recommendation.count(query).exec((err,count)=>{
