@@ -35,7 +35,11 @@
                         "/news/:id#1.0.0",
                         "/user/:id#1.0.0",
                         "/userList#1.0.0",
-                        "/reco/getColumnsList#1.0.0"
+                        "/reco/addColumn#1.0.0",
+                        "/reco/deleteColumns#1.0.0",
+                        "/reco/getColumnsList#1.0.0",
+                        "/reco/getDisabledColumnsList#1.0.0",
+                        "/reco/updateColumn#1.0.0"
                     ],
                     "permissions": "*"
                 }]

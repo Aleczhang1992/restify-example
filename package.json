@@ -19,6 +19,7 @@
   "homepage": "https://github.com/MarshalW/restify-boilerplate#readme",
   "dependencies": {
     "acl": "^0.4.9",
+    "async": "^2.0.0",
     "jsonwebtoken": "^7.0.0",
     "moment": "^2.13.0",
     "mongoose": "^4.5.3",
