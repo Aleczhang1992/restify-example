@@ -40,15 +40,28 @@ routes.push({
         let isMore = false,query = {
             Attributes:language,
             appId:appID
-        },selector = "title menuId type level count";
+        },selector = "title menuId type level count appId Attributes";
         if(columnId) query.menuId = columnId;
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
+            var data_real = [];
             Recommendation.find(query).sort({ level: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
                 if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-2");
-                res.send({code:0,list:data,count:count,isMore:isMore});
-                next();
+                async.map(data,function(item,cb){
+                    let item_ = item.toObject();
+                    item_.name = item.title;
+                    item_.language = item.Attributes;
+                    item_.columnId = item.menuId;
+                    item_.index = item.level;
+                    item_.appID = item.appId;
+                    data_real.push(item_);
+                    cb();
+                },function(err,result){
+                    if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
+                    res.send({code:0,list:data_real,count:count,isMore:isMore});
+                    next();
+                });
             });
         });
     }
@@ -79,8 +92,23 @@ routes.push({
             if(count>(skip+limit)) isMore = true;
             Recommendation.find(query).limit(limit).skip(skip).select(selector).exec((err,data)=>{
                 if(err) errCallback(res,err,next,500,"获取删除的订阅栏目-数据库错误-2");
-                res.send({code:0,list:data,count:count,isMore:isMore});
-                next();
+                Recommendation.find(query).sort({ level: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
+                    if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-2");
+                    async.map(data,function(item,cb){
+                        let item_ = item.toObject();
+                        item_.name = item.title;
+                        item_.language = item.Attributes;
+                        item_.columnId = item.menuId;
+                        item_.index = item.level;
+                        item_.appID = item.appId;
+                        data_real.push(item_);
+                        cb();
+                    },function(err,result){
+                        if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
+                        res.send({code:0,list:data_real,count:count,isMore:isMore});
+                        next();
+                    });
+                });
             });
         });
     }
