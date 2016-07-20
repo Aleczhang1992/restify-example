@@ -35,17 +35,14 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        let { limit=10,skip=0,language='zh',name=false,appID='chinaApp',columnId=false} = req.params;
+        let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
         limit=Number.parseInt(limit);
         skip=Number.parseInt(skip);
-        //console.log(limit,skip,language,name,appID,columnId);
-        let isMore = false,query = {
-            Attributes:language,
-            appId:appID
-        },selector = "title menuId type level count appId Attributes";
-        if(columnId) query = {menuId:columnId};
-        if(name) query = {title:new RegExp(name,"g")};
-        //console.log(query);
+        let isMore = false,query = {},selector = "title menuId type level count appId Attributes";
+        if(language) query.Attributes=language;
+        if(appID) query.appId=appID;
+        if(columnId) query.menuId=columnId;
+        if(name) query.title= new RegExp(name,"g");
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
@@ -85,12 +82,15 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { limit=10,skip=0,language='zh',name='',appID='',columnId=''} = req.params;
-        let isMore = false,data_real=[],query = {
-            delete:true,
-            Attributes:language
-        },selector = "title menuId type level count";
-        if(columnId) query.menuId = columnId;
+        let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
+        limit=Number.parseInt(limit);
+        skip=Number.parseInt(skip);
+        let isMore = false,query = {},data_real=[],selector = "title menuId type level count appId Attributes";
+        if(language) query.Attributes=language;
+        if(appID) query.appId=appID;
+        if(columnId) query.menuId=columnId;
+        if(name) query.title= new RegExp(name,"g");
+        query.delete = true;
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取删除的订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
