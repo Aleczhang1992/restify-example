@@ -38,7 +38,9 @@ routes.push({
         let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
         limit=Number.parseInt(limit);
         skip=Number.parseInt(skip);
-        let isMore = false,query = {},selector = "title menuId type level count appId Attributes";
+        let isMore = false,query = {
+            delete:false
+        },selector = "title menuId type level count appId Attributes";
         if(language) query.Attributes=language;
         if(appID) query.appId=appID;
         if(columnId) query.menuId=columnId;
@@ -85,12 +87,13 @@ routes.push({
         let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
         limit=Number.parseInt(limit);
         skip=Number.parseInt(skip);
-        let isMore = false,query = {},data_real=[],selector = "title menuId type level count appId Attributes";
+        let isMore = false,query = {
+            delete:true
+        },data_real=[],selector = "title menuId type level count appId Attributes";
         if(language) query.Attributes=language;
         if(appID) query.appId=appID;
         if(columnId) query.menuId=columnId;
         if(name) query.title= new RegExp(name,"g");
-        query.delete = true;
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取删除的订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
@@ -236,7 +239,9 @@ routes.push({
             });
         },function(err,result){
             if(err) errCallback(res,err,next,500,"删除订阅栏目-async错误");
-            res.send({code:0,message:"删除栏目成功",successArr:successArr,failedArr:failedArr});
+            let message = '删除栏目成功';
+            if(failedArr.length>0) message = '删除栏目失败';
+            res.send({code:0,message:message,successArr:successArr,failedArr:failedArr});
             next();
         });
     }
