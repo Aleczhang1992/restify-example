@@ -40,7 +40,7 @@ routes.push({
         skip=Number.parseInt(skip);
         let isMore = false,query = {
             delete:false
-        },selector = "title menuId type level count appId Attributes";
+        },selector = "title menuId type level count appId Attributes isSubscribed isDelete";
         if(language) query.Attributes=language;
         if(appID) query.appId=appID;
         if(columnId) query.menuId=columnId;
@@ -89,7 +89,7 @@ routes.push({
         skip=Number.parseInt(skip);
         let isMore = false,query = {
             delete:true
-        },data_real=[],selector = "title menuId type level count appId Attributes";
+        },data_real=[],selector = "title menuId type level count appId Attributes isSubscribed isDelete";
         if(language) query.Attributes=language;
         if(appID) query.appId=appID;
         if(columnId) query.menuId=columnId;
