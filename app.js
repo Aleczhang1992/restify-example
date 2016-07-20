@@ -39,6 +39,8 @@ const server = restify.createServer({
 
 const plugins = [
     restify.acceptParser(server.acceptable),
+    //restify.jsonp(),
+    //restify.bodyParser({ mapParams: true }),
     restify.dateParser(),
     restify.queryParser(),
     restify.fullResponse(),

@@ -35,13 +35,17 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { limit=10,skip=0,language='zh',name='',appID='chinaApp',columnId=''} = req.params;
+        let { limit=10,skip=0,language='zh',name=false,appID='chinaApp',columnId=false} = req.params;
+        limit=Number.parseInt(limit);
+        skip=Number.parseInt(skip);
         //console.log(limit,skip,language,name,appID,columnId);
         let isMore = false,query = {
             Attributes:language,
             appId:appID
         },selector = "title menuId type level count appId Attributes";
-        if(columnId) query.menuId = columnId;
+        if(columnId) query = {menuId:columnId};
+        if(name) query = {title:new RegExp(name,"g")};
+        //console.log(query);
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
             if(count>(skip+limit)) isMore = true;
@@ -82,7 +86,7 @@ routes.push({
     },
     action: function(req, res, next) {
         const { limit=10,skip=0,language='zh',name='',appID='',columnId=''} = req.params;
-        let isMore = false,query = {
+        let isMore = false,data_real=[],query = {
             delete:true,
             Attributes:language
         },selector = "title menuId type level count";
@@ -217,23 +221,62 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { columnId=false } = req.params;
-        if(!columnId) {
-            res.send({code:501,message:"却少参数"});
+        const { columnIdArr=false } = req.params;
+        if(!columnIdArr) {
+            res.send({code:501,message:"缺少参数"});
             next();
         }
-        Recommendation.update({"menuId":columnId,delete:false},{$set:{delete:true}},function(err,num){
-            if(err) errCallback(res,err,next,500,"删除订阅栏目-数据库错误");
-            //console.log(num);
-            if(num.nModified>=1) res.send({code:0,message:"删除栏目成功"});
-            else res.send({code:1,message:"删除栏目失败,未找到栏目或栏目已被删除"});
+        let failedArr = [],successArr = [];
+        async.map(columnIdArr,function(columnId,cb){
+            Recommendation.update({"menuId":columnId,delete:false},{$set:{delete:true}},function(err,num){
+                if(err) errCallback(res,err,next,500,"删除订阅栏目-数据库错误");
+                if(num.nModified>=1) successArr.push({columnId:columnId});
+                else failedArr.push({columnId:columnId,message:"未找到栏目或栏目数据未变化"});
+                cb();
+            });
+        },function(err,result){
+            if(err) errCallback(res,err,next,500,"删除订阅栏目-async错误");
+            res.send({code:0,message:"删除栏目成功",successArr:successArr,failedArr:failedArr});
             next();
         });
     }
 });
 
 
-
+/**
+ * POST 栏目恢复
+ * Version: 1.0.0
+ */
+routes.push({
+    meta: {
+        name: 'reuseColumns',
+        method: 'POST',
+        paths: [
+            '/reco/reuseColumns'
+        ],
+        version: '1.0.0'
+    },
+    action: function(req, res, next) {
+        const { columnIdArr=false } = req.params;
+        if(!columnIdArr) {
+            res.send({code:501,message:"缺少参数"});
+            next();
+        }
+        let failedArr = [],successArr = [];
+        async.map(columnIdArr,function(columnId,cb){
+            Recommendation.update({"menuId":columnId,delete:true},{$set:{delete:false}},function(err,num){
+                if(err) errCallback(res,err,next,500,"恢复订阅栏目-数据库错误");
+                if(num.nModified>=1) successArr.push({columnId:columnId});
+                else failedArr.push({columnId:columnId,message:"未找到栏目或栏目数据未变化"});
+                cb();
+            });
+        },function(err,result){
+            if(err) errCallback(res,err,next,500,"恢复订阅栏目-async错误");
+            res.send({code:0,message:"恢复栏目成功",successArr:successArr,failedArr:failedArr});
+            next();
+        });
+    }
+});
 
 
 /**

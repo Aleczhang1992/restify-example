@@ -39,7 +39,8 @@
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
                         "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0"
+                        "/reco/updateColumn#1.0.0",
+                        "/reco/reuseColumns#1.0.0"
                     ],
                     "permissions": "*"
                 }]
@@ -61,7 +62,8 @@
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
                         "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0"
+                        "/reco/updateColumn#1.0.0",
+                        "/reco/reuseColumns#1.0.0"
                     ],
                     "permissions": "post"
                 }]
@@ -82,7 +84,8 @@
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
                         "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0"
+                        "/reco/updateColumn#1.0.0",
+                        "/reco/reuseColumns#1.0.0"
                     ],
                     "permissions": "post"
                 }]
