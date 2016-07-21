@@ -146,41 +146,42 @@ routes.push({
             if(data && data.length>0){
                 res.send({code:101,message:"该栏目Id已经存在"});
                 next();
-            }
-            Recommendation.create({
-                menuId: columnId,
-                type: type,
-                url: url,
-                title: name,
-                Attributes: language,
-                isSubscribed: isSubscribed,
-                isDelete: isDelete,
-                level: index,
-                appId: appID
-            },function (err, result) {
-                if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-1");
-                if(isDelete=="NO") {
-                    res.send({code:0,message:"创建订阅栏目成功"});
-                    next();
-                }
-                Users.find({},function(err,users){
-                    if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-2");
-                    const lang = appID+"_"+language;
-                    async.map(users,function(user,callback){
-                        if(user.recommendation[lang]){
-                            user.recommendation[lang].noSubscribed.push(columnId);
-                            Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
-                                if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-3");
-                                callback(null,1);
-                            });
-                        }else callback(null,0);
-                    },function(err,result){
-                        if (err) errCallback(res,err,next,501,"修改订阅栏目-async错误-1");
+            }else {
+                Recommendation.create({
+                    menuId: columnId,
+                    type: type,
+                    url: url,
+                    title: name,
+                    Attributes: language,
+                    isSubscribed: isSubscribed,
+                    isDelete: isDelete,
+                    level: index,
+                    appId: appID
+                },function (err, result) {
+                    if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-1");
+                    if(isDelete=="NO") {
                         res.send({code:0,message:"创建订阅栏目成功"});
                         next();
+                    }
+                    Users.find({},function(err,users){
+                        if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-2");
+                        const lang = appID+"_"+language;
+                        async.map(users,function(user,callback){
+                            if(user.recommendation[lang]){
+                                user.recommendation[lang].noSubscribed.push(columnId);
+                                Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
+                                    if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-3");
+                                    callback(null,1);
+                                });
+                            }else callback(null,0);
+                        },function(err,result){
+                            if (err) errCallback(res,err,next,501,"修改订阅栏目-async错误-1");
+                            res.send({code:0,message:"创建订阅栏目成功"});
+                            next();
+                        });
                     });
                 });
-            });
+            }
         });
     }
 });
