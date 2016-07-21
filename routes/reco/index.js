@@ -135,7 +135,7 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        let { columnId=false,name=false,index=999,isDelete='YES',isSubscribed='NO',appID='chinaApp',language='zh',type=0,url=''} = req.params;
+        let { columnId=false,name=false,index=999,isDelete='YES',isSubscribed='NO',appID="chinaApp",language='zh',type=0,url=''} = req.params;
         if(!columnId||!name) {
             console.log(columnId,name);
             res.send({code:401,message:"缺少参数"});
@@ -201,10 +201,12 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        let { columnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
+        const { columnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
         if(!columnId) errCallback(res,{},next,401,"缺少参数");
-        columnId = columnId.replace(/\s/,"");
-        const query = {};
+        let menuId = columnId.replace(/\s/,"");
+        const query = {
+            menuId:menuId
+        };
         if(name) query.title= name;
         if(index) query.level= index;
         if(isDelete) query.isDelete= isDelete;
@@ -214,14 +216,49 @@ routes.push({
         if(type) query.level= type;
         if(url) query.level= url;
         if(del) query.delete= del;
-
-        Recommendation.update({"menuId":columnId},{$set:query},function(err,num){
-            if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误");
-            //console.log(num);
-            if(num.nModified>=1) res.send({code:0,message:"更新栏目成功"});
-            else res.send({code:1,message:"更新栏目失败,未找到栏目或栏目数据未变化"});
-            next();
-        });
+        let n = 0;
+        async.series([
+            function(done){
+                Recommendation.update({"menuId":columnId},{$set:query},function(err,num){
+                    if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误");
+                    if(num.nModified>=1) n=1;
+                    //else res.send({code:1,message:"更新栏目失败,未找到栏目或栏目数据未变化"});
+                    done();
+                });
+            },
+            function(done){
+                if(menuId!=columnId){
+                    //Users.find({},function(err,users){
+                    //    if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-2");
+                    //    if(!appID || !language) errCallback(res,err,next,401,"缺少参数");
+                    //    console.log("========>");
+                    //    const lang = appID+"_"+language;
+                    //    async.map(users,function(user,callback){
+                    //        if(user.recommendation[lang]){
+                    //            user.recommendation[lang].noSubscribed.push(columnId);
+                    //            Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
+                    //                if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-3");
+                    //                callback(null,1);
+                    //            });
+                    //        }else callback(null,0);
+                    //    },function(err,result){
+                    //        if (err) errCallback(res,err,next,501,"订阅栏目更新-async错误-1");
+                    //        res.send({code:0,message:"创建订阅栏目成功"});
+                    //        done();
+                    //    });
+                    //});
+                    done();
+                }else {
+                    if(n>=1) res.send({code:0,message:"更新栏目成功"});
+                    else res.send({code:1,message:"更新栏目失败,未找到栏目或栏目数据未变化"});
+                    done();
+                }
+            },
+            function(done){
+                done();
+                next();
+            }
+        ]);
     }
 });
 
