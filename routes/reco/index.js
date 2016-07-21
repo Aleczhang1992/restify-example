@@ -135,12 +135,13 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { columnId=false,name=false,index=999,isDelete='YES',isSubscribed='NO',appID='chinaApp',language='zh',type=0,url=''} = req.params;
+        let { columnId=false,name=false,index=999,isDelete='YES',isSubscribed='NO',appID='chinaApp',language='zh',type=0,url=''} = req.params;
         if(!columnId||!name) {
             console.log(columnId,name);
             res.send({code:401,message:"缺少参数"});
             next();
         }
+        columnId = columnId.replace(/\s/,"");
         Recommendation.find({menuId: columnId},function(err,data){
             if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-0");
             if(data && data.length>0){
@@ -200,8 +201,9 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { columnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
+        let { columnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
         if(!columnId) errCallback(res,{},next,401,"缺少参数");
+        columnId = columnId.replace(/\s/,"");
         const query = {};
         if(name) query.title= name;
         if(index) query.level= index;
