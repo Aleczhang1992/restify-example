@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 var async = require('async');
 
 var RecommendationSchema = new Schema({
-    menuId: {type: String, require: true, default: ''},   //栏目id
+    menuId: {type: String, unique: true,require: true, default: ''},   //栏目id
     level: {type: Number, require: true, default: 999}, //排序等级,越小越靠前
     type: {type: Number, require: true, default: 0},   //栏目类型。0=普通栏目，展示列表；1=电台;2=特殊栏目，展示webview
     url: {type: String, require: true, default: ''},   //特殊栏目的url。type=1时需要

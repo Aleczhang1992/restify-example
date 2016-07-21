@@ -35,6 +35,7 @@
                         "/news/:id#1.0.0",
                         "/user/:id#1.0.0",
                         "/userList#1.0.0",
+                        "/userRecoDel#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
@@ -58,6 +59,7 @@
                 }, {
                     "resources": [
                         "/user/:id#1.0.0",
+                        "/userRecoDel#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
@@ -80,6 +82,7 @@
                 }, {
                     "resources": [
                         "/auth/signIn#1.0.0",
+                        "/userRecoDel#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
