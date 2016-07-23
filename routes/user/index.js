@@ -5,6 +5,8 @@ const logger = require('../../utils/logging');
 const Users = require('../../models/index').Users;
 const async = require('async');
 const errCallback = require('../../tools/tool').errCallback;
+const nconf = require('../../config');
+
 /**
  * Routes
  */
@@ -126,6 +128,49 @@ routes.push({
         });
     }
 });
+
+
+/**
+ * 用户列表
+ * */
+routes.push({
+    meta: {
+        name: 'checkVersion',
+        method: 'POST',
+        paths: [
+            '/checkVersion'
+        ],
+        version: '1.0.0'
+    },
+    action: function(req, res, next) {
+        let { version,appId,language="zh",type="android"} = req.params;
+        //console.log("checkVersion");
+        if(!version||!appId) errCallback(res,{},next,409,"缺少版本号或者应用id");
+        version = version.replace(/\./ig,"");
+        let myVersion = nconf.get('Versions:'+appId+":"+type+':version');
+        myVersion = myVersion.replace(/\./ig,"");
+        let updateType = 0,updateInfo="不需要更新",newVersion="",downloadUrl="";
+        //console.log(myVersion,version);
+        if(Number.parseInt(myVersion)>=Number.parseInt(version)){
+            updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
+            updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo');
+            newVersion = nconf.get('Versions:'+appId+":"+type+':version');
+            downloadUrl = nconf.get('Versions:'+appId+":"+type+':downloadUrl');
+        }
+        res.send({
+            code:0,
+            message:"success",
+            info:{
+                updateType:updateType,//0-不需要更新，1-非强制更新，2-强制更新
+                updateInfo:updateInfo,
+                newVersion:newVersion,
+                downloadUrl:downloadUrl
+            }
+        });
+        next();
+    }
+});
+
 /**
  * Export
  */

@@ -8,6 +8,22 @@
         "Origins": [],
         "Headers": []
     },
+    "Versions":{
+        "chinaApp":{
+            "android":{
+                "version":"0.0.2",
+                "updateType":"1",
+                "updateInfo":"android下载百度试试吧",
+                "downloadUrl":"http://www.baidu.com/android"
+            },
+            "ios":{
+                "version":"0.0.2",
+                "updateType":"1",
+                "updateInfo":"ios下载百度试试吧",
+                "downloadUrl":"http://www.baidu.com/ios"
+            }
+        }
+    },
     "Logging": {},
     "Mongodb":{
         "Mongo":"mongodb://127.0.0.1:27017/china_user",
@@ -81,6 +97,7 @@
                     "permissions": "get"
                 }, {
                     "resources": [
+                        "/checkVersion#1.0.0",
                         "/auth/signIn#1.0.0",
                         "/userRecoDel#1.0.0",
                         "/reco/addColumn#1.0.0",

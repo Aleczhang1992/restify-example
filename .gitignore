@@ -15,3 +15,5 @@ npm-debug.log
 # 本地shell脚本,用来保持models/index.js文件可以和服务器端一致
 www.sh
 
+# 删除.DS_Store文件
+.DS_Store
