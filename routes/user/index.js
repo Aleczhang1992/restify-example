@@ -149,7 +149,7 @@ routes.push({
         version = version.replace(/\./ig,"");
         let myVersion = nconf.get('Versions:'+appId+":"+type+':version');
         myVersion = myVersion.replace(/\./ig,"");
-        let updateType = 0,updateInfo="不需要更新",newVersion="",downloadUrl="";
+        let updateType = "0",updateInfo="不需要更新",newVersion="",downloadUrl="";
         //console.log(myVersion,version);
         if(Number.parseInt(myVersion)>=Number.parseInt(version)){
             updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
