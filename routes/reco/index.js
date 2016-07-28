@@ -162,7 +162,7 @@ routes.push({
                 },function (err, result) {
                     if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-1");
                     if(isDelete == "NO") {
-                        res.send({code:0,message:"创建订阅栏目成功"});
+                        res.send({code:0,message:"创建不可删除的订阅栏目成功"});
                         next();
                     }else {
                         Users.find({},function(err,users){
@@ -178,7 +178,7 @@ routes.push({
                                 }else callback(null,0);
                             },function(err,result){
                                 if (err) errCallback(res,err,next,501,"修改订阅栏目-async错误-1");
-                                res.send({code:0,message:"创建订阅栏目成功"});
+                                res.send({code:0,message:"创建普通的订阅栏目成功"});
                                 next();
                             });
                         });
