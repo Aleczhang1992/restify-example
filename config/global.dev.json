@@ -11,10 +11,10 @@
     "Versions":{
         "chinaApp":{
             "android":{
-                "version":"0.0.2",
-                "updateType":"1",
-                "updateInfo":"android下载百度试试吧",
-                "downloadUrl":"http://www.baidu.com/android"
+                "version":"1.0.1",
+                "updateType":"2",
+                "updateInfo":"android下载",
+                "downloadUrl":"http://app2.pgyer.com/84ed060ed5e3524997f6c16b9a17560c.apk?v=1.1&sign=36369859ba440cca7f38b1c8f4035f80&t=5799b060&attname=app-chinaApp-release%286%29.apk"
             },
             "ios":{
                 "version":"0.0.2",
