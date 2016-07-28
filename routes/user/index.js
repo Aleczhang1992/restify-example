@@ -149,16 +149,17 @@ routes.push({
         version = version.replace(/\./ig,"");
         let myVersion = nconf.get('Versions:'+appId+":"+type+':version');
         myVersion = myVersion.replace(/\./ig,"");
-        let updateType = "0",updateInfo="不需要更新",newVersion="",downloadUrl="";
+        let code=1, updateType="0", updateInfo="不需要更新", newVersion="", downloadUrl="";
         //console.log(myVersion,version);
-        if(Number.parseInt(myVersion)>=Number.parseInt(version)){
+        if(Number.parseInt(myVersion) > Number.parseInt(version)){ //需要更新
+            code = 0;
             updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
             updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo');
             newVersion = nconf.get('Versions:'+appId+":"+type+':version');
             downloadUrl = nconf.get('Versions:'+appId+":"+type+':downloadUrl');
         }
         res.send({
-            code:0,
+            code:code,
             message:"success",
             info:{
                 updateType:updateType,//0-不需要更新，1-非强制更新，2-强制更新
