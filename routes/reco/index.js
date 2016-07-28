@@ -58,6 +58,7 @@ routes.push({
                     item_.columnId = item.menuId;
                     item_.index = item.level;
                     item_.appID = item.appId;
+                    item_.subCount = item.count;
                     data_real.push(item_);
                     cb();
                 },function(err,result){
@@ -160,27 +161,28 @@ routes.push({
                     appId: appID
                 },function (err, result) {
                     if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-1");
-                    if(isDelete=="NO") {
+                    if(isDelete == "NO") {
                         res.send({code:0,message:"创建订阅栏目成功"});
                         next();
-                    }
-                    Users.find({},function(err,users){
-                        if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-2");
-                        const lang = appID+"_"+language;
-                        async.map(users,function(user,callback){
-                            if(user.recommendation[lang]){
-                                user.recommendation[lang].noSubscribed.push(columnId);
-                                Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
-                                    if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-3");
-                                    callback(null,1);
-                                });
-                            }else callback(null,0);
-                        },function(err,result){
-                            if (err) errCallback(res,err,next,501,"修改订阅栏目-async错误-1");
-                            res.send({code:0,message:"创建订阅栏目成功"});
-                            next();
+                    }else {
+                        Users.find({},function(err,users){
+                            if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-2");
+                            const lang = appID+"_"+language;
+                            async.map(users,function(user,callback){
+                                if(user.recommendation[lang]){
+                                    user.recommendation[lang].noSubscribed.push(columnId);
+                                    Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
+                                        if(err) errCallback(res,err,next,500,"修改订阅栏目-数据库错误-3");
+                                        callback(null,1);
+                                    });
+                                }else callback(null,0);
+                            },function(err,result){
+                                if (err) errCallback(res,err,next,501,"修改订阅栏目-async错误-1");
+                                res.send({code:0,message:"创建订阅栏目成功"});
+                                next();
+                            });
                         });
-                    });
+                    }
                 });
             }
         });
@@ -227,7 +229,7 @@ routes.push({
                 });
             },
             function(done){
-                if(menuId!=columnId){
+                if(menuId!=columnId){//TODO 如果是修改订阅栏目的menuId的话,需要改变用户的数据
                     //Users.find({},function(err,users){
                     //    if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-2");
                     //    if(!appID || !language) errCallback(res,err,next,401,"缺少参数");
@@ -277,7 +279,7 @@ routes.push({
     },
     action: function(req, res, next) {
         const { columnIdArr=false } = req.params;
-        if(!columnIdArr) {
+        if(!columnIdArr || typeof columnIdArr !== "object") {
             res.send({code:501,message:"缺少参数"});
             next();
         }
