@@ -152,8 +152,8 @@ routes.push({
         let updateType="0", updateInfo="不需要更新", newVersion="", downloadUrl="";
         //console.log(myVersion,version);
 
-        //if(Number.parseInt(myVersion) > Number.parseInt(version)){ //需要更新
-        if(false){
+        if(Number.parseInt(myVersion) > Number.parseInt(version)){ //需要更新
+        //if(false){
             updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
             updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo');
             newVersion = nconf.get('Versions:'+appId+":"+type+':version');
