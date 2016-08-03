@@ -10,6 +10,10 @@
     },
     "Versions":{
         "chinaApp":{
+            "noUpdateInfo":{
+                "zh":"不需要更新",
+                "en":"Don`t need update."
+            },
             "android":{
                 "version":"1.0.3",
                 "updateType":"2",

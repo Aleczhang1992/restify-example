@@ -147,7 +147,7 @@ routes.push({
         if(!version||!appId) errCallback(res,{},next,409,"缺少版本号或者应用id");
         version = version.split(".");
         let myVersion = nconf.get('Versions:'+appId+":"+type+':version').split(".");
-        let updateType="0", updateInfo="不需要更新", newVersion="", downloadUrl="";
+        let updateType="0", updateInfo=nconf.get('Versions:'+appId+":noUpdateInfo:"+language), newVersion="", downloadUrl="";
         let update = false;
         for(let i=0;i<version.length;i++){
             if(Number.parseInt(myVersion[i])>Number.parseInt(version[i]) && !update){
