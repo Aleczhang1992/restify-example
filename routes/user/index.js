@@ -144,18 +144,20 @@ routes.push({
     },
     action: function(req, res, next) {
         let { version,appId,language="zh",type="android"} = req.params;
-        //console.log("checkVersion");
         if(!version||!appId) errCallback(res,{},next,409,"缺少版本号或者应用id");
-        version = version.replace(/\./ig,"");
-        let myVersion = nconf.get('Versions:'+appId+":"+type+':version');
-        myVersion = myVersion.replace(/\./ig,"");
+        version = version.split(".");
+        let myVersion = nconf.get('Versions:'+appId+":"+type+':version').split(".");
         let updateType="0", updateInfo="不需要更新", newVersion="", downloadUrl="";
-        //console.log(myVersion,version);
-
-        if(Number.parseInt(myVersion) > Number.parseInt(version)){ //需要更新
-        //if(false){
+        let update = false;
+        for(let i=0;i<version.length;i++){
+            if(Number.parseInt(myVersion[i])>Number.parseInt(version[i]) && !update){
+                update = true;
+            }
+        }
+        if(update){
+        // if(false){  //去掉更新
             updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
-            updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo');
+            updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo:'+language);
             newVersion = nconf.get('Versions:'+appId+":"+type+':version');
             downloadUrl = nconf.get('Versions:'+appId+":"+type+':downloadUrl');
         }

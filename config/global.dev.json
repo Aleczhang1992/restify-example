@@ -13,13 +13,19 @@
             "android":{
                 "version":"1.0.3",
                 "updateType":"2",
-                "updateInfo":"发现1.0.3版本",
+                "updateInfo":{
+                    "zh":"发现1.0.3版本",
+                    "en":"Find Version 1.0.3"
+                },
                 "downloadUrl":"http://7xtw4b.com2.z0.glb.clouddn.com/app-chinaApp-release%289%29.apk"
             },
             "ios":{
-                "version":"0.0.2",
+                "version":"45.10.255",
                 "updateType":"1",
-                "updateInfo":"ios下载百度试试吧",
+                "updateInfo":{
+                    "zh":"发现1.0.3版本",
+                    "en":"FInd version 1.0.3"
+                },
                 "downloadUrl":"http://www.baidu.com/ios"
             }
         }
