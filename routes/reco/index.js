@@ -203,7 +203,7 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        const { columnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
+        const { columnId=false,newColumnId=false,name=false,index=false,isDelete=false,isSubscribed=false,appID=false,language=false,type=false,url=false,del=false} = req.params;
         if(!columnId) errCallback(res,{},next,401,"缺少参数");
         let menuId = columnId.replace(/\s/,"");
         const query = {
@@ -221,7 +221,7 @@ routes.push({
         let n = 0;
         async.series([
             function(done){
-                Recommendation.update({"menuId":columnId},{$set:query},function(err,num){
+                Recommendation.update({menuId:menuId},{$set:query},function(err,num){
                     if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误");
                     if(num.nModified>=1) n=1;
                     //else res.send({code:1,message:"更新栏目失败,未找到栏目或栏目数据未变化"});
@@ -229,36 +229,38 @@ routes.push({
                 });
             },
             function(done){
-                if(menuId!=columnId){//TODO 如果是修改订阅栏目的menuId的话,需要改变用户的数据
-                    //Users.find({},function(err,users){
-                    //    if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-2");
-                    //    if(!appID || !language) errCallback(res,err,next,401,"缺少参数");
-                    //    console.log("========>");
-                    //    const lang = appID+"_"+language;
-                    //    async.map(users,function(user,callback){
-                    //        if(user.recommendation[lang]){
-                    //            user.recommendation[lang].noSubscribed.push(columnId);
-                    //            Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
-                    //                if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-3");
-                    //                callback(null,1);
-                    //            });
-                    //        }else callback(null,0);
-                    //    },function(err,result){
-                    //        if (err) errCallback(res,err,next,501,"订阅栏目更新-async错误-1");
-                    //        res.send({code:0,message:"创建订阅栏目成功"});
-                    //        done();
-                    //    });
-                    //});
-                    done();
+                if(newColumnId){//TODO 如果是修改订阅栏目的menuId的话,需要改变用户的数据
+                    Users.find({},function(err,users){
+                        if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-2");
+                        if(!appID || !language) errCallback(res,err,next,401,"缺少参数");
+                        //console.log("========>");
+                        const lang = appID+"_"+language;
+                        async.map(users,function(user,callback){
+                            if(user.recommendation[lang]){
+                                // TODO 需要把用户的旧menuId替换为新的
+                                if(user.recommendation[lang].noSubscribed.indexOf(menuId) >= 0){
+                                    user.recommendation[lang].noSubscribed.splice(user.recommendation[lang].noSubscribed.indexOf(menuId),1,newColumnId);
+                                }else if(user.recommendation[lang].subscribed.indexOf(menuId) >= 0) {
+                                    user.recommendation[lang].subscribed.splice(user.recommendation[lang].noSubscribed.indexOf(menuId),1,newColumnId);
+                                }
+                                Users.update({_id:user._id},{$set:{recommendation:user.recommendation}},function(err,num){
+                                    if(err) errCallback(res,err,next,500,"订阅栏目更新-数据库错误-3");
+                                    callback(null,1);
+                                });
+                            }else callback(null,0);
+                        },function(err,result){
+                            if (err) errCallback(res,err,next,501,"订阅栏目更新-async错误-1");
+                            res.send({code:0,message:"修改订阅栏目"});
+                            done();
+                            next();
+                        });
+                    });
                 }else {
                     if(n>=1) res.send({code:0,message:"更新栏目成功"});
                     else res.send({code:1,message:"更新栏目失败,未找到栏目或栏目数据未变化"});
                     done();
+                    next();
                 }
-            },
-            function(done){
-                done();
-                next();
             }
         ]);
     }

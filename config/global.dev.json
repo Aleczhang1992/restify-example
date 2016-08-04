@@ -12,14 +12,16 @@
         "chinaApp":{
             "noUpdateInfo":{
                 "zh":"不需要更新",
-                "en":"Don`t need update."
+                "en":"Don`t need update.",
+                "ge":"Don`t need update."
             },
             "android":{
                 "version":"1.0.3",
                 "updateType":"2",
                 "updateInfo":{
                     "zh":"发现1.0.3版本",
-                    "en":"Find Version 1.0.3"
+                    "en":"Find Version 1.0.3",
+                    "ge":"Find Version 1.0.3"
                 },
                 "downloadUrl":"http://7xtw4b.com2.z0.glb.clouddn.com/app-chinaApp-release%289%29.apk"
             },
@@ -28,7 +30,8 @@
                 "updateType":"1",
                 "updateInfo":{
                     "zh":"发现1.0.3版本",
-                    "en":"FInd version 1.0.3"
+                    "en":"FInd version 1.0.3",
+                    "ge":"Find Version 1.0.3"
                 },
                 "downloadUrl":"http://www.baidu.com/ios"
             }
