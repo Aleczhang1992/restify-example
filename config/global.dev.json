@@ -8,35 +8,6 @@
         "Origins": [],
         "Headers": []
     },
-    "Versions":{
-        "chinaApp":{
-            "noUpdateInfo":{
-                "zh":"不需要更新",
-                "en":"Don`t need update.",
-                "ge":"Don`t need update."
-            },
-            "android":{
-                "version":"1.0.3",
-                "updateType":"2",
-                "updateInfo":{
-                    "zh":"发现1.0.3版本",
-                    "en":"Find Version 1.0.3",
-                    "ge":"Find Version 1.0.3"
-                },
-                "downloadUrl":"http://7xtw4b.com2.z0.glb.clouddn.com/app-chinaApp-release%289%29.apk"
-            },
-            "ios":{
-                "version":"45.10.255",
-                "updateType":"1",
-                "updateInfo":{
-                    "zh":"发现1.0.3版本",
-                    "en":"FInd version 1.0.3",
-                    "ge":"Find Version 1.0.3"
-                },
-                "downloadUrl":"http://www.baidu.com/ios"
-            }
-        }
-    },
     "Logging": {},
     "Mongodb":{
         "Mongo":"mongodb://127.0.0.1:27017/china_user",
@@ -65,6 +36,7 @@
                         "/user/:id#1.0.0",
                         "/userList#1.0.0",
                         "/userRecoDel#1.0.0",
+                        "/feedbackList#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
@@ -89,6 +61,7 @@
                     "resources": [
                         "/user/:id#1.0.0",
                         "/userRecoDel#1.0.0",
+                        "/feedbackList#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",
@@ -113,6 +86,7 @@
                         "/checkVersion#1.0.0",
                         "/auth/signIn#1.0.0",
                         "/userRecoDel#1.0.0",
+                        "/feedbackList#1.0.0",
                         "/reco/addColumn#1.0.0",
                         "/reco/deleteColumns#1.0.0",
                         "/reco/getColumnsList#1.0.0",

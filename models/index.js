@@ -21,8 +21,12 @@ require('./like');
 require('./users');
 require('./recommendation');
 require('./operator');
+require('./feedback');
 exports.Users = mongoose.model('Users');
 exports.Likes = mongoose.model('Likes');
 exports.Comments = mongoose.model('Comments');
 exports.Recommendation = mongoose.model('Recommendation');
 exports.Operator = mongoose.model('Operator');
+exports.Feedback = mongoose.model('Feedback');
+
+

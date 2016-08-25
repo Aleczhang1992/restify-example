@@ -3,6 +3,7 @@
 const restify = require('restify');
 const logger = require('../../utils/logging');
 const Users = require('../../models/index').Users;
+const Feedback = require('../../models/index').Feedback;
 const async = require('async');
 const errCallback = require('../../tools/tool').errCallback;
 const nconf = require('../../config');
@@ -131,47 +132,31 @@ routes.push({
 
 
 /**
- * 用户列表
+ * 检查版本更新
  * */
 routes.push({
     meta: {
-        name: 'checkVersion',
+        name: 'feedbackList',
         method: 'POST',
         paths: [
-            '/checkVersion'
+            '/feedbackList'
         ],
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        let { version,appId,language="zh",type="android"} = req.params;
-        if(!version||!appId) errCallback(res,{},next,409,"缺少版本号或者应用id");
-        version = version.split(".");
-        let myVersion = nconf.get('Versions:'+appId+":"+type+':version').split(".");
-        let updateType="0", updateInfo=nconf.get('Versions:'+appId+":noUpdateInfo:"+language), newVersion="", downloadUrl="";
-        let update = false;
-        for(let i=0;i<version.length;i++){
-            if(Number.parseInt(myVersion[i])>Number.parseInt(version[i]) && !update){
-                update = true;
-            }
-        }
-        if(update){
-        // if(false){  //去掉更新
-            updateType = nconf.get('Versions:'+appId+":"+type+':updateType');
-            updateInfo = nconf.get('Versions:'+appId+":"+type+':updateInfo:'+language);
-            newVersion = nconf.get('Versions:'+appId+":"+type+':version');
-            downloadUrl = nconf.get('Versions:'+appId+":"+type+':downloadUrl');
-        }
-        res.send({
-            code:0,
-            message:"success",
-            info:{
-                updateType:updateType,//0-不需要更新，1-非强制更新，2-强制更新
-                updateInfo:updateInfo,
-                newVersion:newVersion,
-                downloadUrl:downloadUrl
-            }
+        let { limit=15,skip=0,language,appId} = req.params;
+        if(typeof limit === "string") limit = Number.parseInt(limit);
+        if(typeof skip === "string") skip = Number.parseInt(skip);
+
+        let query = {};
+        if(language) query.language = language;
+        if(appId) query.appId = appId;
+        let selector = "mail appId phone system content version language createTime";
+        Feedback.find(query).sort({ createTime: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
+            if(err) errCallback(res,err,next,500,"feedbackList-数据库错误");
+            res.send({ code:0, message:"success",list:data });
+            next();
         });
-        next();
     }
 });
 
