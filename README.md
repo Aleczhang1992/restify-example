@@ -43,9 +43,9 @@ npm test
 
 ## api接口
 
+* methord: POST
+* url: http://ch.dev.selcome.com/china/v1/checkVersion
 ```
-methord: POST
-url: http://ch.dev.selcome.com/china/v1/checkVersion
 request:{
     "appId": "chinaApp",
     "version": "0.0.1",
@@ -59,7 +59,33 @@ response:{
         "updateInfo": "版本更新内容",
         "newVersion": "1.2.1",
         "downloadUrl": "http:…."
+    }
 }
 ```
 
 
+* methord: POST
+* url: http://ch.dev.selcome.com/china/v1/feedbackList
+```
+request:{
+    "skip": 0,
+    "limit": 15,
+    "appId": "chinaApp",
+    "language": "zh"
+}
+response:{
+    "code":0, 
+    "message":"success", 
+    "list":[ 
+        {
+            "mail": "username@mail.com",
+            "appId": "chinaApp",
+            "phone": "iphone 6s Plus", //手机型号
+            "system": "ios 9.1.9",     //手机操作系统版本号
+            "content": "反馈的实际内容,特殊字符需要转义",
+            "version": "1.0.6",  //app的版本号
+            "language": "zh"
+        }
+    }
+}
+```
