@@ -132,7 +132,7 @@ routes.push({
 
 
 /**
- * 检查版本更新
+ * 获取反馈列表
  * */
 routes.push({
     meta: {
@@ -151,11 +151,25 @@ routes.push({
         let query = {};
         if(language) query.language = language;
         if(appId) query.appId = appId;
-        let selector = "mail appId phone system content version language createTime";
-        Feedback.find(query).sort({ createTime: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
-            if(err) errCallback(res,err,next,500,"feedbackList-数据库错误");
-            res.send({ code:0, message:"success",list:data });
-            next();
+
+        let selector = "mail appId phone system content version language createTime",isMore=true,count=0;
+        Feedback.count(query).exec((err,num)=>{
+            if(err) errCallback(res,err,next,500,"feedbackList-数据库错误-1");
+            else {
+                count = num;
+                Feedback.find(query).sort({ createTime: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
+                    if(err) errCallback(res,err,next,500,"feedbackList-数据库错误-2");
+                    else {
+                        //if(data.length > limit) {
+                        //    isMore = true;
+                        //    data.pop();
+                        //}
+                        if(skip+limit >= count) isMore = false;
+                        res.send({ code:0, message:"success",list:data,count:count,isMore:isMore });
+                        next();
+                    }
+                });
+            }
         });
     }
 });

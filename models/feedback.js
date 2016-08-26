@@ -13,6 +13,7 @@ var FeedbackSchema = new Schema({
     content: {type: String, require: true},
     version: {type: String, require: true},
     language: {type: String, require: true},
+    delete: {type: Boolean, default: false},
     createTime: {type: Number, require: true, default: Date.now},
     updateTime: {type: Number, require: true, default: Date.now}
 });

@@ -65,7 +65,7 @@ response:{
 
 
 * methord: POST
-* url: http://ch.dev.selcome.com/china/v1/feedbackList
+* url: http://chapp.selcome.com/china/v1/feedbackList  正式服地址
 ```
 request:{
     "skip": 0,
@@ -84,8 +84,10 @@ response:{
             "system": "ios 9.1.9",     //手机操作系统版本号
             "content": "反馈的实际内容,特殊字符需要转义",
             "version": "1.0.6",  //app的版本号
-            "language": "zh"
+            "language": "zh",
+            "createTime" "1472105409303"
         }
     }
 }
 ```
+
