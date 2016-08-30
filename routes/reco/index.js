@@ -35,8 +35,12 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
-        let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
-        limit=Number.parseInt(limit);
+        let { limit,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
+        if(!limit){
+            limit = Number.MAX_SAFE_INTEGER;
+        }else {
+            limit=Number.parseInt(limit);
+        }
         skip=Number.parseInt(skip);
         let isMore = false,query = {
             delete:false
