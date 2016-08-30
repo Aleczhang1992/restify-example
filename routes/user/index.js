@@ -157,7 +157,7 @@ routes.push({
             if(err) errCallback(res,err,next,500,"feedbackList-数据库错误-1");
             else {
                 count = num;
-                Feedback.find(query).sort({ createTime: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
+                Feedback.find(query).sort({ createTime: -1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
                     if(err) errCallback(res,err,next,500,"feedbackList-数据库错误-2");
                     else {
                         //if(data.length > limit) {
