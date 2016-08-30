@@ -83,6 +83,7 @@
                     "permissions": "get"
                 }, {
                     "resources": [
+                        "/addVersion#1.0.0",
                         "/checkVersion#1.0.0",
                         "/auth/signIn#1.0.0",
                         "/userRecoDel#1.0.0",

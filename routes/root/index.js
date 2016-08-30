@@ -2,7 +2,8 @@
 
 const logger = require('../../utils/logging');
 const nconf=require('../../config');
-
+const Version = require('../../models/index').Version;
+const errCallback = require('../../tools/tool').errCallback;
 /**
  * Routes
  */
@@ -29,6 +30,38 @@ routes.push({
             name: nconf.get('Server:Name')
         });
         return next();
+    }
+});
+
+routes.push({
+    meta: {
+        name: 'addVersion',
+        method: 'POST',
+        paths: [
+            '/addVersion'
+        ],
+        version: '1.0.0'
+    },
+    action: function(req, res, next) {
+        let { type,appId,version,updateType,updateInfo,downloadUrl} = req.params;
+        if(!type || !appId || !version || !updateType || !updateInfo || !downloadUrl){
+            errCallback(res,{},next,501,"删除用户订阅栏目-async错误-1");
+        }else {
+            Version.create({
+                type:type,
+                appId:appId,
+                version:version,
+                updateInfo:updateInfo,
+                updateType:updateType,
+                downloadUrl:downloadUrl
+            },function(err,result){
+                if(err) {
+                    logger.dbLogger.info('db error:'+err);
+                    res.send({code:500,message:"db error.",err:err});
+                }else res.send({code:0,message:"Add version success.",result:result});
+                return next();
+            });
+        }
     }
 });
 

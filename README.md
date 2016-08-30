@@ -91,3 +91,36 @@ response:{
 }
 ```
 
+* methord: POST
+* url: http://chapp.selcome.com/china/v1/addVersion  正式服地址
+```
+request:{
+    "type":"android",
+    "appId":"chinaApp",
+    "version":"0.1.3",
+    "updateInfo":{
+        "zh":"快点更新0.1.3",
+        "en":"hurry update 0.1.3"
+    },
+    "updateType":"2",
+    "downloadUrl":"http://www.baidu.com"
+}
+response:{
+    "code": 0,
+    "message": "Add version success.",
+    "result": {
+        "__v": 0,
+        "type": "android",
+        "appId": "chinaApp",
+        "version": "0.1.3",
+        "updateInfo": {
+            "en": "hurry update 0.1.3",
+            "zh": "快点更新0.1.3"
+        },
+        "updateType": "2",
+        "downloadUrl": "http://www.baidu.com",
+        "_id": "57c53f32be2816b60a720f6d",
+        "createTime": 1472544562722
+    }
+}
+```
