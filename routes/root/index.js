@@ -45,7 +45,7 @@ routes.push({
     action: function(req, res, next) {
         let { type,appId,version,updateType,updateInfo,downloadUrl} = req.params;
         if(!type || !appId || !version || !updateType || !updateInfo || !downloadUrl){
-            errCallback(res,{},next,501,"删除用户订阅栏目-async错误-1");
+            errCallback(res,{},next,501,"参数错误");
         }else {
             Version.create({
                 type:type,
