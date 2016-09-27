@@ -75,6 +75,7 @@ if (corsOptions.headers.length) {
     server.on('MethodNotAllowed', require(path.join(__dirname, 'utils', 'corsHelper.js'))());
 }
 
+//设置每个路由方法
 const registerRoute = function(route) {
 
     let {
@@ -103,17 +104,21 @@ const registerRoute = function(route) {
 
 };
 
+
+//设置路由函数
 const setupRoute = function(routeName) {
     const routes = require(path.join(__dirname, 'routes', routeName));
     routes.forEach(registerRoute);
 };
 
+//设置现有路由
 [
     'root',
     'news',
     'auth',
     'user',
-    'reco'
+    'reco',
+    'movie'
 ]
 .forEach(setupRoute);
 

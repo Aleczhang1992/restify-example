@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var async = require('async');
 
+//定义一种Schema
 var RecommendationSchema = new Schema({
     menuId: {type: String, unique: true,require: true, default: ''},   //栏目id
     level: {type: Number, require: true, default: 999}, //排序等级,越小越靠前
@@ -27,6 +28,7 @@ RecommendationSchema.pre('save', function (next) {
     next();
 });
 
+//添加公共的静态方法，仅限model使用，如果使用method可以在Model和Entity使用
 RecommendationSchema.statics.findData = function(appId,language,callback){
     var self = this,strong=[],sub=[],noSub=[],subId=[],noSubId=[];
     self.find({delete:false,Attributes:language,appId:appId},null,{sort: {level: 1}},function(err,data){
@@ -103,4 +105,5 @@ RecommendationSchema.statics.reduceCount = function (menuId, callback) {
     });
 };
 
+//将该Schema发布为Model，会在数据库中创建Recommendation集合
 mongoose.model('Recommendation', RecommendationSchema);

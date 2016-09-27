@@ -118,7 +118,12 @@
                         "/reco/getColumnsList#1.0.0",
                         "/reco/getDisabledColumnsList#1.0.0",
                         "/reco/updateColumn#1.0.0",
-                        "/reco/reuseColumns#1.0.0"
+                        "/reco/reuseColumns#1.0.0",
+                        "/movie/getMovieList#1.0.0",
+                        "/movie/addMovie#1.0.0",
+                        "/movie/updateMovie#1.0.0",
+                         "/movie/deleteMovies#1.0.0",
+                        "/movie/reuseMovies#1.0.0"
                     ],
                     "permissions": "post"
                 }]

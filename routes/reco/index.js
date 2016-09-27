@@ -35,22 +35,33 @@ routes.push({
         version: '1.0.0'
     },
     action: function(req, res, next) {
+    	//参数初始化和获取请求传参
         let { limit=10,skip=0,language=false,appID=false,name=false,columnId=false} = req.params;
+    //格式化
         limit=Number.parseInt(limit);
         skip=Number.parseInt(skip);
-        let isMore = false,query = {
+        let isMore = false,
+        		query = {
             delete:false
-        },selector = "title menuId type level count appId Attributes isSubscribed isDelete";
+        		},
+    //筛选项
+        selector = "title menuId type level count appId Attributes isSubscribed isDelete";
+    //根据参数判断，传了什么，即根据对应参数进行筛选，query即查询参数对象
         if(language) query.Attributes=language;
         if(appID) query.appId=appID;
         if(columnId) query.menuId=columnId;
         if(name) query.title= new RegExp(name,"g");
+        //返回符合条件的文档数
         Recommendation.count(query).exec((err,count)=>{
             if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
+            //分页逻辑
             if(count>(skip+limit)) isMore = true;
+            //返回的数据数组
             var data_real = [];
+            //进行查库操作
             Recommendation.find(query).sort({ level: 1 }).limit(limit).skip(skip).select(selector).exec((err,data)=>{
                 if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-2");
+                //遍历数据库，并将数据返回
                 async.map(data,function(item,cb){
                     let item_ = item.toObject();
                     item_.name = item.title;
@@ -63,6 +74,7 @@ routes.push({
                     cb();
                 },function(err,result){
                     if(err) errCallback(res,err,next,500,"获取订阅栏目-数据库错误-1");
+                    //从接口返回
                     res.send({code:0,list:data_real,count:count,isMore:isMore});
                     next();
                 });
