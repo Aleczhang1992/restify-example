@@ -2,7 +2,7 @@
 
 const logger = require('../../utils/logging');
 const nconf=require('../../config');
-
+const errCallback = require('../../tools/tool').errCallback;
 /**
  * Routes
  */
@@ -31,6 +31,8 @@ routes.push({
         return next();
     }
 });
+
+
 
 /**
  * Export

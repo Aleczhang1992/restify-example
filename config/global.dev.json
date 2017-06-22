@@ -8,126 +8,97 @@
         "Origins": [],
         "Headers": []
     },
-    "Versions":{
-        "chinaApp":{
-            "noUpdateInfo":{
-                "zh":"不需要更新",
-                "en":"Don`t need update.",
-                "ge":"Don`t need update."
-            },
-            "android":{
-                "version":"1.0.3",
-                "updateType":"2",
-                "updateInfo":{
-                    "zh":"发现1.0.3版本",
-                    "en":"Find Version 1.0.3",
-                    "ge":"Find Version 1.0.3"
-                },
-                "downloadUrl":"http://7xtw4b.com2.z0.glb.clouddn.com/app-chinaApp-release%289%29.apk"
-            },
-            "ios":{
-                "version":"45.10.255",
-                "updateType":"1",
-                "updateInfo":{
-                    "zh":"发现1.0.3版本",
-                    "en":"FInd version 1.0.3",
-                    "ge":"Find Version 1.0.3"
-                },
-                "downloadUrl":"http://www.baidu.com/ios"
-            }
-        }
-    },
     "Logging": {},
-    "Mongodb":{
-        "Mongo":"mongodb://127.0.0.1:27017/china_user",
-        "Name":"china_app"
+    "Mongodb": {
+        "Mongo": "mongodb://127.0.0.1:27017/test_server",
+        "Name": "test_server"
     },
     "Security": {
         "SecretSigningKey": "are you ok?",
-        "Users": [{
-            "userId": "100",
-            "role": "guest"
-        }, {
-            "userId": "123",
-            "role": "customer"
-        }, {
-            "userId": "007",
-            "role": "admin"
-        }],
+        "Users": [
+            {
+                "userId": "100",
+                "role": "guest"
+            },
+            {
+                "userId": "123",
+                "role": "customer"
+            },
+            {
+                "userId": "007",
+                "role": "admin"
+            }
+        ],
         "ACL": {
-            "Rules": [{
-                "roles": ["admin"],
-                "allows": [{
-                    "resources": [
-                        "/#1.0.0",
-                        "/news#1.0.0",
-                        "/news/:id#1.0.0",
-                        "/user/:id#1.0.0",
-                        "/userList#1.0.0",
-                        "/userRecoDel#1.0.0",
-                        "/reco/addColumn#1.0.0",
-                        "/reco/deleteColumns#1.0.0",
-                        "/reco/getColumnsList#1.0.0",
-                        "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0",
-                        "/reco/reuseColumns#1.0.0"
+            "Rules": [
+                {
+                    "roles": [
+                        "admin"
                     ],
-                    "permissions": "*"
-                }]
-            }, {
-                "roles": ["customer"],
-                "allows": [{
-                    "resources": [
-                        "/#1.0.0",
-                        "/news#1.0.0",
-                        "/news/:id#1.0.0",
-                        "/user/:id#1.0.0",
-                        "/userList#1.0.0"
+                    "allows": [
+                        {
+                            "resources": [
+                                "/#1.0.0",
+                                "/news#1.0.0",
+                                "/news/:id#1.0.0",
+                                "/user/:id#1.0.0",
+                                "/userList#1.0.0"
+                            ],
+                            "permissions": "*"
+                        }
+                    ]
+                },
+                {
+                    "roles": [
+                        "customer"
                     ],
-                    "permissions": "get"
-                }, {
-                    "resources": [
-                        "/user/:id#1.0.0",
-                        "/userRecoDel#1.0.0",
-                        "/reco/addColumn#1.0.0",
-                        "/reco/deleteColumns#1.0.0",
-                        "/reco/getColumnsList#1.0.0",
-                        "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0",
-                        "/reco/reuseColumns#1.0.0"
+                    "allows": [
+                        {
+                            "resources": [
+                                "/#1.0.0",
+                                "/news#1.0.0",
+                                "/news/:id#1.0.0",
+                                "/user/:id#1.0.0",
+                                "/userList#1.0.0"
+                            ],
+                            "permissions": "get"
+                        },
+                        {
+                            "resources": [
+                                "/user/:id#1.0.0"
+                            ],
+                            "permissions": "post"
+                        }
+                    ]
+                },
+                {
+                    "roles": [
+                        "guest"
                     ],
-                    "permissions": "post"
-                }]
-            }, {
-                "roles": ["guest"],
-                "allows": [{
-                    "resources": [
-                        "/#1.0.0",
-                        "/news#1.0.0",
-                        "/news/:id#1.0.0",
-                        "/userList#1.0.0"
-                    ],
-                    "permissions": "get"
-                }, {
-                    "resources": [
-                        "/checkVersion#1.0.0",
-                        "/auth/signIn#1.0.0",
-                        "/userRecoDel#1.0.0",
-                        "/reco/addColumn#1.0.0",
-                        "/reco/deleteColumns#1.0.0",
-                        "/reco/getColumnsList#1.0.0",
-                        "/reco/getDisabledColumnsList#1.0.0",
-                        "/reco/updateColumn#1.0.0",
-                        "/reco/reuseColumns#1.0.0",
-                        "/movie/getMovieList#1.0.0",
-                        "/movie/addMovie#1.0.0",
-                        "/movie/updateMovie#1.0.0",
-                         "/movie/deleteMovies#1.0.0",
-                        "/movie/reuseMovies#1.0.0"
-                    ],
-                    "permissions": "post"
-                }]
-            }]
+                    "allows": [
+                        {
+                            "resources": [
+                                "/#1.0.0",
+                                "/news#1.0.0",
+                                "/news/:id#1.0.0",
+                                "/userList#1.0.0"
+                            ],
+                            "permissions": "get"
+                        },
+                        {
+                            "resources": [
+                                "/auth/signIn#1.0.0",
+                                "/movie/getMovieList#1.0.0",
+                                "/movie/addMovie#1.0.0",
+                                "/movie/updateMovie#1.0.0",
+                                "/movie/deleteMovies#1.0.0",
+                                "/movie/reuseMovies#1.0.0"
+                            ],
+                            "permissions": "post"
+                        }
+                    ]
+                }
+            ]
         }
     }
 }

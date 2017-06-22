@@ -117,7 +117,6 @@ const setupRoute = function(routeName) {
     'news',
     'auth',
     'user',
-    'reco',
     'movie'
 ]
 .forEach(setupRoute);

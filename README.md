@@ -1,4 +1,4 @@
-# 中国网新闻后台
+# restify的样板项目
 ---
 
 ## 安装和运行
@@ -42,24 +42,4 @@ npm test
 
 
 ## api接口
-
-```
-methord: POST
-url: http://ch.dev.selcome.com/china/v1/checkVersion
-request:{
-    "appId": "chinaApp",
-    "version": "0.0.1",
-    "type": "android"   // "ios"
-}
-response:{
-    "code":0, 
-    "message":"success", 
-    "info":{ 
-        "updateType": 0, //0-不需要更新，1-非强制更新，2-强制更新
-        "updateInfo": "版本更新内容",
-        "newVersion": "1.2.1",
-        "downloadUrl": "http:…."
-}
-```
-
 
